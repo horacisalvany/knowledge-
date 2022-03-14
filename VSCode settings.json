@@ -1,0 +1,28 @@
+{
+  "http.proxy": "http://es001-surf.zone2.proxy.allianz:8080",
+  "editor.suggestSelection": "first",
+  "git.enabled": true,
+  // For global: itmp-frontend-workspace
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+  "editor.renderWhitespace": "trailing",
+  "editor.linkedEditing": true,
+  "editor.wordWrap": "on",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "[typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.tslint": true,
+      "source.organizeImports": true
+    }
+  },
+  "workbench.colorTheme": "Dracula",
+  "workbench.iconTheme": "vscode-icons",
+  "editor.mouseWheelZoom": true,
+  "editor.fontSize": 15,
+  "editor.tabSize": 1,
+  "workbench.editor.wrapTabs": true,
+  "workbench.activityBar.visible": false,
+  "window.zoomLevel": -3,
+  "angular.experimental-ivy": true,
+}
