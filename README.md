@@ -9,6 +9,22 @@ Basic general concepts to work with.
   
 
 ### Java
+#### Conversions
+- String to int:
+
+ `Integer.valueOf(string)`
+ or 
+ ```
+IntStream.range(0, digits.length())
+	.mapToObj(i -> digits.substring(i,i+1))
+	.mapToInt(Integer::parseInt)
+	.sum();
+ ```
+- Second item
+- Third item
+- Fourth item
+
+
 #### Java 8
 ##### Collection 
 A Collection is an in-memory data structure, which holds all the values that the data structure currently has. Every element in the Collection has to be computed before we add it to the Collection. Operations such as searching, sorting, insertion, manipulation, and deletion can be performed on a Collection. It provides many interfaces like (Set, List, Queue, Deque) and Classes like (ArrayList, Vector, LinkedList, PriorityQueue, HashSet).
