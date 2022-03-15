@@ -5,12 +5,17 @@ Basic general concepts to work with.
 ## Table of contents <!-- omit in toc -->
 - [Coding](#coding)
   - [Java](#java)
+   - [Conversions](#conversions)
+   - [Collections](#collection)
+   - [Streams](#stream)
+   
+   - [Spring Boot (Spring)](#spring-boot-spring)
   - [Kotlin](#kotlin)
   
 
 ### Java
 #### Conversions
-- String to int:
+- *String* to *int*:
 
  `Integer.valueOf(string)`
  or 
@@ -20,9 +25,8 @@ IntStream.range(0, digits.length())
 	.mapToInt(Integer::parseInt)
 	.sum();
  ```
-- Second item
-- Third item
-- Fourth item
+- *Char* to *Int*: `Character.getNumericValue(c))`
+- *String* to *Char*: `word.chars().forEach(c -> println(c));`
 
 
 #### Java 8
@@ -154,6 +158,8 @@ https://www.geeksforgeeks.org/difference-between-streams-and-collections-in-java
     - Options: `BEFORE_CLASS`, `BEFORE_EACH_TEST_METHOD`, `AFTER_EACH_TEST_METHOD` or `AFTER_CLASS`.
   - Method level: `@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)`.
     - Options: `BEFORE_METHOD` or `AFTER_METHOD`.
+
+---
 
 ### Kotlin
 Caracteristiques del llenguatge
