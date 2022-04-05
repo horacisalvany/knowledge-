@@ -5,11 +5,10 @@ Basic general concepts to work with.
 ## Table of contents <!-- omit in toc -->
 - [Coding](#coding)
   - [Java](#java)
-   - [Conversions](#conversions)
-   - [Collections](#collection)
-   - [Streams](#stream)
-   
-   - [Spring Boot (Spring)](#spring-boot-spring)
+    - [Conversions](#conversions)
+    - [Collections](#collection)
+    - [Streams](#stream) 
+    - [Spring Boot (Spring)](#spring-boot-spring)
   - [Kotlin](#kotlin)
   
 
@@ -117,6 +116,43 @@ class GFG {
 ```
 
 https://www.geeksforgeeks.org/difference-between-streams-and-collections-in-java/
+
+#### Patterns
+How to pass from a imperative function to functional one using patterns
+**Key part**:  never type **-> {** (anonymous lambdas)
+How to:
+1. Transform it using Stream API
+2. Prefer Named Functions Over Anonymous Lambdas (toDto)
+3. Create a class for that (UserDto) and put that logic on the constructor. Refering that using **double colon operator** (https://www.baeldung.com/java-8-double-colon-operator) **.map(UserDto::new)**
+4. (optional in case we need other component inside de lambda function): 
+```
+public class UserFacade {
+          @Autowired
+          private UserRepo userRepo;
+          @Autowired
+          private UserMapper mapper;         
+		  
+          public List<UserDto> getAllUsers() {
+                   return userRepo.findAll().stream().map(mapper::toDto).collect(toList());
+
+          }
+}
+
+@Component
+public class UserMapper {
+          @Autowired
+          private OtherClass otherClass;
+
+          public UserDto toDto(User user) {
+                   UserDto dto = new UserDto();
+                   dto.setUsername(user.getUsername());
+                   ... // code using otherClass
+                   return dto;
+          }
+}
+```
+
+https://dzone.com/articles/functional-programming-patterns-with-java-8
 
 
 #### Spring Boot (Spring)
