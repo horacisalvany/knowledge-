@@ -157,6 +157,10 @@ https://dzone.com/articles/functional-programming-patterns-with-java-8
 
 #### Spring Boot (Spring)
 
+#### Beans scope
+By default, beans are defined as "Singleton", which means that Spring inject just once instance for application.
+If we want to have one instance for each request to that bean, we have to use "Prototype" scope. Be carefull because the user must controll the creation and destruction of each instance, otherwise we can collapse easily the RAM memory.
+
 <!-- TODO: WIP profiles. -->
 
 - Run the application: `mvn spring-boot:run`:
