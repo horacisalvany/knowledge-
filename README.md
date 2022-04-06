@@ -157,7 +157,7 @@ https://dzone.com/articles/functional-programming-patterns-with-java-8
 
 #### Spring Boot (Spring)
 
-#### Beans scope
+##### Beans scope
 By default, beans are defined as "Singleton", which means that Spring inject just once instance for application.
 If we want to have one instance for each request to that bean, we have to use "Prototype" scope. Be carefull because the user must controll the creation and destruction of each instance, otherwise we can collapse easily the RAM memory.
 
@@ -198,7 +198,11 @@ If we want to have one instance for each request to that bean, we have to use "P
     - Options: `BEFORE_CLASS`, `BEFORE_EACH_TEST_METHOD`, `AFTER_EACH_TEST_METHOD` or `AFTER_CLASS`.
   - Method level: `@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)`.
     - Options: `BEFORE_METHOD` or `AFTER_METHOD`.
-
+    
+#### Concurrency: Threads (CompletableFuture API)
+Runneable -> Doesn't return. https://www.callicoder.com/java-8-completablefuture-tutorial/
+Callable -> Return. https://www.callicoder.com/java-callable-and-future-tutorial/
+ExecutorService -> An Executor that provides methods to manage termination and methods that can produce a Future for tracking progress of one or more asynchronous tasks.
 ---
 
 ### Kotlin
