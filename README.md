@@ -11,6 +11,12 @@ Basic general concepts to work with.
     - [Spring Boot (Spring)](#spring-boot-spring)
   - [Kotlin](#kotlin)
   
+### Git
+usefull commands:
+- git log --oneline
+- cat .git/config
+- 
+
 
 ### Java
 #### Conversions
