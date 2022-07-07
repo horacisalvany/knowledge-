@@ -4,6 +4,8 @@ Basic general concepts to work with.
 
 ## Table of contents <!-- omit in toc -->
 - [Git](#git)
+- [Typescript](#typescript)
+- [Lambda functions](#lambda-functions)
 - [Java](#java)
   - [Conversions](#conversions)
   - [Java 8](#java-8)
@@ -25,14 +27,22 @@ Basic general concepts to work with.
     - [Que testejar?](#que-testejar)
   - [Links interessants:](#links-interessants)
   - [Configuracio](#configuracio-1)
-
-
 ### Git
 
 usefull commands:
 
 - git log --oneline
 - cat .git/config
+
+### Typescript
+### Lambda functions
+Difference between one line return or block
+(x) => x     // Equivalent to (x) => {return x}
+colores.map((color) => {  
+    color = 'verde'
+    return color = color + '1'
+}) // Returns: ['verde1', 'verde1']
+
 
 ### Java
 
