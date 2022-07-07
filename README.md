@@ -3,40 +3,62 @@
 Basic general concepts to work with.
 
 ## Table of contents <!-- omit in toc -->
-- [Coding](#coding)
-  - [Java](#java)
-    - [Conversions](#conversions)
-    - [Collections](#collection)
-    - [Streams](#stream) 
-    - [Spring Boot (Spring)](#spring-boot-spring)
-  - [Kotlin](#kotlin)
-  
+- [Knowledge-](#knowledge-)
+    - [Git](#git)
+    - [Java](#java)
+      - [Conversions](#conversions)
+      - [Java 8](#java-8)
+        - [Collection](#collection)
+        - [Stream](#stream)
+      - [Patterns](#patterns)
+      - [Spring Boot (Spring)](#spring-boot-spring)
+        - [Beans scope](#beans-scope)
+      - [Concurrency: Threads (CompletableFuture API)](#concurrency-threads-completablefuture-api)
+    - [Kotlin](#kotlin)
+      - [Nullable: es pot forçar a que una variable sigui not nullable](#nullable-es-pot-forçar-a-que-una-variable-sigui-not-nullable)
+        - [Safe Calls](#safe-calls)
+      - [Elvis Operator](#elvis-operator)
+      - [The !! Operator](#the--operator)
+      - [\* VS ANY](#-vs-any)
+      - [Llibreries utils:](#llibreries-utils)
+      - [Testing](#testing)
+        - [Configuracio:](#configuracio)
+        - [Que testejar?](#que-testejar)
+      - [Links interessants:](#links-interessants)
+      - [Configuracio](#configuracio-1)
+
 ### Git
+
 usefull commands:
+
 - git log --oneline
 - cat .git/config
-- 
-
 
 ### Java
-#### Conversions
-- *String* to *int*:
 
- `Integer.valueOf(string)`
- or 
- ```
+#### Conversions
+
+- _String_ to _int_:
+
+`Integer.valueOf(string)`
+or
+
+```
 IntStream.range(0, digits.length())
 	.mapToObj(i -> digits.substring(i,i+1))
 	.mapToInt(Integer::parseInt)
 	.sum();
- ```
-- *Char* to *Int*: `Character.getNumericValue(c))`
-- *String* to *Char*: `word.chars().forEach(c -> println(c));`
+```
 
+- _Char_ to _Int_: `Character.getNumericValue(c))`
+- _String_ to _Char_: `word.chars().forEach(c -> println(c));`
 
 #### Java 8
-##### Collection 
+
+##### Collection
+
 A Collection is an in-memory data structure, which holds all the values that the data structure currently has. Every element in the Collection has to be computed before we add it to the Collection. Operations such as searching, sorting, insertion, manipulation, and deletion can be performed on a Collection. It provides many interfaces like (Set, List, Queue, Deque) and Classes like (ArrayList, Vector, LinkedList, PriorityQueue, HashSet).
+
 ```
 // Java Program to Illustrate Collection
 
@@ -76,6 +98,7 @@ class GFG {
 ```
 
 ##### Stream
+
 On the other hand, IStream is an API that is introduced in Java 8 which is used to process collections of objects. A stream is a sequence of objects that supports various methods which can be pipelined to produce the desired result. The Stream API is used to process collections of objects. A stream is a sequence of objects that supports various methods that can be pipelined to produce the desired result.
 
 The features of the Java stream are:
@@ -83,6 +106,7 @@ The features of the Java stream are:
 A stream is not a data structure instead it takes input from the Collections, Arrays, or I/O channels.
 Streams don’t change the original data structure, they only provide the result as per the pipelined methods. Streams only provide the result as per the pipelined methods and don’t change the original data structure.
 Each intermediate operation is lazily executed and returns a stream as a result, hence various intermediate operations can be pipelined. Terminal operations mark the end of the stream and return the result.
+
 ```
 // Java Program to Illustrate Collection
 
@@ -124,20 +148,23 @@ class GFG {
 https://www.geeksforgeeks.org/difference-between-streams-and-collections-in-java/
 
 #### Patterns
+
 How to pass from a imperative function to functional one using patterns
-**Key part**:  never type **-> {** (anonymous lambdas)
+**Key part**: never type **-> {** (anonymous lambdas)
 How to:
+
 1. Transform it using Stream API
 2. Prefer Named Functions Over Anonymous Lambdas (toDto)
 3. Create a class for that (UserDto) and put that logic on the constructor. Refering that using **double colon operator** (https://www.baeldung.com/java-8-double-colon-operator) **.map(UserDto::new)**
-4. (optional in case we need other component inside de lambda function): 
+4. (optional in case we need other component inside de lambda function):
+
 ```
 public class UserFacade {
           @Autowired
           private UserRepo userRepo;
           @Autowired
-          private UserMapper mapper;         
-		  
+          private UserMapper mapper;
+
           public List<UserDto> getAllUsers() {
                    return userRepo.findAll().stream().map(mapper::toDto).collect(toList());
 
@@ -160,10 +187,10 @@ public class UserMapper {
 
 https://dzone.com/articles/functional-programming-patterns-with-java-8
 
-
 #### Spring Boot (Spring)
 
 ##### Beans scope
+
 By default, beans are defined as "Singleton", which means that Spring inject just once instance for application.
 If we want to have one instance for each request to that bean, we have to use "Prototype" scope. Be carefull because the user must controll the creation and destruction of each instance, otherwise we can collapse easily the RAM memory.
 
@@ -204,14 +231,17 @@ If we want to have one instance for each request to that bean, we have to use "P
     - Options: `BEFORE_CLASS`, `BEFORE_EACH_TEST_METHOD`, `AFTER_EACH_TEST_METHOD` or `AFTER_CLASS`.
   - Method level: `@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)`.
     - Options: `BEFORE_METHOD` or `AFTER_METHOD`.
-    
+
 #### Concurrency: Threads (CompletableFuture API)
+
 Runneable -> Doesn't return. https://www.callicoder.com/java-8-completablefuture-tutorial/
 Callable -> Return. https://www.callicoder.com/java-callable-and-future-tutorial/
 ExecutorService -> An Executor that provides methods to manage termination and methods that can produce a Future for tracking progress of one or more asynchronous tasks.
+
 ---
 
 ### Kotlin
+
 Caracteristiques del llenguatge
 Type inference: Dedueix el tipo d’una variable per la seva asignacio
 `val apple = "apple" // String`
@@ -224,6 +254,7 @@ val nullable: String? = null
 ```
 
 ##### Safe Calls
+
 ```
 val a = "Kotlin"
 val b: String? = null
@@ -236,6 +267,7 @@ null
 ```
 
 #### Elvis Operator
+
 When we have a nullable reference b, we can say "if b is not null, use it, otherwise use some non-null value":
 `val l: Int = if (b != null) b.length else -1`
 
@@ -243,75 +275,80 @@ Along with the complete if-expression, this can be expressed with the Elvis oper
 `val l = b?.length ?: -1`
 
 #### The !! Operator
+
 Per convertir un valor a un tipus no nullable, quan estem segurs que no pot ser null (sino seguiria llençant el NPE =NULLPOINTEREXCEPTION)
 
-#### * VS ANY
-El * indica que pot ser d’un tipus Xm  pero tots seran del tipus X. (ex: Link<*>)
-El any  indica que pot ser de qualsevol tipus. (ex: Link<any>)
+#### \* VS ANY
+
+El _ indica que pot ser d’un tipus Xm pero tots seran del tipus X. (ex: Link<_>)
+El any indica que pot ser de qualsevol tipus. (ex: Link<any>)
 
 #### Llibreries utils:
+
 mapstruct
 
 #### Testing
+
 Llibreries usades
-  - Junit.jupiter
-  - io.mockk
+
+- Junit.jupiter
+- io.mockk
 
 ##### Configuracio:
+
 en el arxiu application.yml de la carpeta test. Exemple:
 cisl:
-  config:
-    commonsDispatcherUrl: http://localhost:${wiremock.server.port}/
+config:
+commonsDispatcherUrl: http://localhost:${wiremock.server.port}/
     authUrl: http://localhost:${wiremock.server.port}/oauth/token
-    grantType: client_credentials
-    clientId: testClientId
-    clientSecret: testSecret
-    user: user
-    password: password
+grantType: client_credentials
+clientId: testClientId
+clientSecret: testSecret
+user: user
+password: password
 
 itmp:
-  mo:
-    creditor:
-      repository:
-        mock:
-          enabled: false
+mo:
+creditor:
+repository:
+mock:
+enabled: false
 
 bff:
-  abs:
-    mapping:
-      users:
-        DE: 0000000
-      agentNumbers:
-        DE: 0000000
+abs:
+mapping:
+users:
+DE: 0000000
+agentNumbers:
+DE: 0000000
 
 logging:
-  level:
-    root:
-      org:
-        junit: WARN
+level:
+root:
+org:
+junit: WARN
 
 spring:
-  sleuth:
-    enabled: false
-  zipkin:
-    enabled: false
-
+sleuth:
+enabled: false
+zipkin:
+enabled: false
 
 ##### Que testejar?
+
 - Controlador: Mira que retorna el json esperat. Es pot comparar a nivell de json o d’objecte
 - Service: Test Unitari. es mockqueja el repository pero no el client HTTP. Per tant, simplement, quan en el servei es fa una crida HTTP, s’indica quines dades retorna per aquella crida.
-- Component: Es mockeja el client HTTP (el FeignClient) per tal de simular les mateixies condicions que s’usan quan es crida als repositories. 
-
+- Component: Es mockeja el client HTTP (el FeignClient) per tal de simular les mateixies condicions que s’usan quan es crida als repositories.
 
 #### Links interessants:
+
 Parametrizar el tests: https://sam09.github.io/Parameterized-Tests-Kotlin/
 How to use MapStruct with Spring Boot (Kotlin) painlessly
 
 #### Configuracio
-Com llençar el mvn clean install de tots els moduls menys uns en concret: usant el ! 
+
+Com llençar el mvn clean install de tots els moduls menys uns en concret: usant el !
 
 Exemples:
 Bash: `mvn clean install -DskipTests -pl \!application-policy-admin,\!code-coverage-report,\!itmp-mo-contract-admin,\!itmp-mo-contract-amendment`
 CMD: ` mvn clean install -DskipTests -pl !application-policy-admin,!code-coverage-report,!itmp-mo-contract-admin,!itmp-mo-contract-amendmen`
-
-
