@@ -33,6 +33,7 @@ Basic general concepts to work with.
   - [Links interessants:](#links-interessants)
   - [Configuracio](#configuracio-1)
 ### Git
+https://ohshitgit.com/
 
 usefull commands:
 
