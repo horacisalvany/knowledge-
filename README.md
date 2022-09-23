@@ -5,12 +5,12 @@ Basic general concepts to work with.
 ## Table of contents <!-- omit in toc -->
 - [Git](#git)
 - [Typescript](#typescript)
+  - [How to debug a component](#how-to-debug-a-component)
   - [Generic Types](#generic-types)
     - [Funcio generica:](#funcio-generica)
     - [Generic type parameter](#generic-type-parameter)
     - [Generic interface](#generic-interface)
     - [Generic classes](#generic-classes)
-  - [Lambda functions](#lambda-functions)
 - [Java](#java)
   - [Conversions](#conversions)
   - [Java 8](#java-8)
@@ -32,6 +32,7 @@ Basic general concepts to work with.
     - [Que testejar?](#que-testejar)
   - [Links interessants:](#links-interessants)
   - [Configuracio](#configuracio-1)
+  
 ### Git
 https://ohshitgit.com/
 
@@ -42,7 +43,15 @@ usefull commands:
 
 ### Typescript
 
-#### Generic Types
+#### How to debug a component
+```
+  constructor() {    
+    window['c'] = this;
+  }
+```
+
+
+##### Generic Types
 https://www.typescriptlang.org/docs/handbook/2/generics.html#working-with-generic-type-variables
 Playing arround -> https://playcode.io/931122/
 
