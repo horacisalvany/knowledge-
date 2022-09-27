@@ -4,7 +4,7 @@ Basic general concepts to work with.
 
 ## Table of contents <!-- omit in toc -->
 - [Git](#git)
-- [Frontend](https://github.com/horacisalvany/knowledge-/blob/main/FrontEnd.md)
+- [Frontend](https://github.com/horacisalvany/knowledge-/blob/main/Frontend.md)
 - [Java](#java)
   - [Conversions](#conversions)
   - [Java 8](#java-8)
