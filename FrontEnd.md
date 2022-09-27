@@ -1,25 +1,24 @@
-### Typescript
+# Typescript
 
-#### How to debug a component
+## How to debug a component
 ```
   constructor() {    
     window['c'] = this;
   }
 ```
 
-
-##### Generic Types
+## Generic Types
 https://www.typescriptlang.org/docs/handbook/2/generics.html#working-with-generic-type-variables
 Playing arround -> https://playcode.io/931122/
 
-##### Funcio generica:
+#### Funcio generica:
 Important: ho es quan afegim **<Pepe> angle bracket ** a la signatura
 ```
 function identity<Type>(arg: Type): Type {
   return arg;
 }
 ```
-##### Generic type parameter	
+#### Generic type parameter	
 Important: podem posar el nom que vulguem, lo important es l'ordre dels parametres
 ```
 let myIdentity: <Jose>(arg: Jose) => Jose = identity;
@@ -28,7 +27,7 @@ console.log(myIdentity); // output: ƒ identity()
 Podem reescriure-ho amb amb la signatura del type
 ` let myIdentity: { <Type>(arg: Type): Type } = identity; `
 	
-##### Generic interface	
+#### Generic interface	
 ```
 interface GenericIdentityFn<Type> {
   (arg: Type): Type;
@@ -37,7 +36,7 @@ interface GenericIdentityFn<Type> {
 let myIdentity3: GenericIdentityFn<number> = identity;
 console.log(myIdentity3('z')); // output: z
 ```
-##### Generic classes
+#### Generic classes
 ```
 class GenericNumber<Pepe> {
   zeroValue: Pepe;
@@ -62,7 +61,7 @@ console.log(stringNumeric.add(stringNumeric.zeroValue, 'test')); // output: sub_
 ```	
 	
 
-#### Lambda functions
+### Lambda functions
 Difference between one line return or block
 `(x) => x     // Equivalent to (x) => {return x}`
 ```	
@@ -71,3 +70,16 @@ colores.map((color) => {
     return color = color + '1'
 }) // Returns: ['verde1', 'verde1']
 ```
+
+# Scss
+Alinear el contingut d'un element i els fills. Dos maneres:
+	1- Desde el pare: 
+	```
+	  text-align: left;
+  	  display: inline-block;
+	```
+	2- Desde el fill:
+	```
+	  margin-left: 0 !important;
+	margin-right: auto !important;
+	```
