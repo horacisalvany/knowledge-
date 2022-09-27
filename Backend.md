@@ -1,3 +1,29 @@
+# Knowledge- <!-- omit in toc -->
+
+Backend for Java and Kotlin.
+
+## Table of contents <!-- omit in toc -->
+
+- [Java 8](#java-8)
+  - [Collection](#collection)
+  - [Stream](#stream)
+  - [Patterns](#patterns)
+  - [Spring Boot (Spring)](#spring-boot-spring)
+    - [Beans scope](#beans-scope)
+  - [Concurrency: Threads (CompletableFuture API)](#concurrency-threads-completablefuture-api)
+- [Kotlin](#kotlin)
+  - [Nullable: es pot forçar a que una variable sigui not nullable](#nullable-es-pot-forçar-a-que-una-variable-sigui-not-nullable)
+  - [Safe Calls](#safe-calls)
+  - [Elvis Operator](#elvis-operator)
+  - [The !! Operator](#the--operator)
+  - [\* VS ANY](#-vs-any)
+  - [Llibreries utils:](#llibreries-utils)
+  - [Testing](#testing)
+    - [Configuracio:](#configuracio)
+  - [Que testejar?](#que-testejar)
+  - [Links interessants:](#links-interessants)
+  - [Configuracio](#configuracio-1)
+
 # Java 8
 
 ## Collection
