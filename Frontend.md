@@ -1,3 +1,17 @@
+# Knowledge- <!-- omit in toc -->
+
+Frontend: Typescript and SCSS. 
+
+## Table of contents <!-- omit in toc -->
+- [Typescript](#typescript)
+  - [How to debug a component](#how-to-debug-a-component)
+  - [Generic Types](#generic-types)
+      - [Funcio generica:](#funcio-generica)
+      - [Generic type parameter](#generic-type-parameter)
+      - [Generic interface](#generic-interface)
+      - [Generic classes](#generic-classes)
+- [Scss](#scss)
+
 # Typescript
 
 ## How to debug a component
