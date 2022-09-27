@@ -73,13 +73,13 @@ colores.map((color) => {
 
 # Scss
 Alinear el contingut d'un element i els fills. Dos maneres:
-	1- Desde el pare: 
+1. Desde el pare: 
 	```
-	  text-align: left;
-  	  display: inline-block;
+	text-align: left;
+  	display: inline-block;
 	```
-	2- Desde el fill:
+2. Desde el fill:
 	```
-	  margin-left: 0 !important;
-	margin-right: auto !important;
+	margin-left: 0;
+	margin-right: auto;
 	```
