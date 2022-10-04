@@ -97,3 +97,94 @@ Alinear el contingut d'un element i els fills. Dos maneres:
 	margin-left: 0;
 	margin-right: auto;
 	```
+ # Testing
+## Jest
+### Mock a service for a test component
+```
+  describe('ClaimsHistoryPreviousInsurerComponent', () => {
+  let component: ClaimsHistoryPreviousInsurerComponent;
+  let fixture: ComponentFixture<ClaimsHistoryPreviousInsurerComponent>;
+  // Service we want to mock
+  let vehicleService: VehicleListService;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [FormsModule, ReactiveFormsModule, TranslateModule.forRoot(), MatDialogModule],
+      declarations: [ClaimsHistoryPreviousInsurerComponent],
+      // Here we add all the services that we need on the constructor
+      providers: [
+        { provide: VehicleListService, useValue: MockVehicleListService },
+        { provide: ConfigService, useValue: MockConfigService },
+        { provide: ToastService, useValue: MockToastService },
+        { provide: MatDialog, useValue: MockMatDialog },
+        { provide: LayoutService, useValue: MockLayoutService },
+        { provide: HttpService, useValue: MockedHttpService },
+        { provide: AccountService, useValue: MockAccountService },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ClaimsHistoryPreviousInsurerComponent);
+    component = fixture.componentInstance;
+    component.insurerConfig = {
+      multiInsurerMode: true,
+      multiInsurerData: [],
+    };
+    // How we can acces to a private service on the constructor: component['service']
+    previousInsurerService = component['previousInsurerService'];
+    showAddCoverageDialogService = component['showAddCoverageDialogService'];
+    vehicleService = component['vehicleListService'];
+    fixture.detectChanges();
+  });
+	
+    it('should add previous insurer', () => {
+    const prevInsurer: AddPreviousInsurerDialogOutput = {
+      startDate: dayjs(),
+      endDate: dayjs(),
+      lastClaimDate: dayjs(),
+      previousInsurerId: 'V21...',
+      institutionCode: INSTITUTION_CODES[0].value,
+    };
+    const prevInsurerRes: PreviousInsurerTO = {
+      ...prevInsurer,
+      lastPreexistingClaimDateTime: prevInsurer.lastClaimDate.format(DATE_TIME_FORMAT),
+      startDateTime: prevInsurer.startDate.format(DATE_TIME_FORMAT),
+      endDateTime: prevInsurer.endDate.format(DATE_TIME_FORMAT),
+    };
+
+    const toastSpy = jest.spyOn(component['toast'], 'successSave');
+    const sortMultiInsurerDataSpy = jest.spyOn(component as any, 'sortMultiInsurerData');
+
+    jest
+      .spyOn(showAddCoverageDialogService, 'showPreviousInsurerDialog')
+      .mockReturnValue(of(prevInsurer));
+    jest.spyOn(previousInsurerService, 'createPreviousInsurer').mockReturnValue(of(prevInsurerRes));
+    jest
+      .spyOn(vehicleService, 'getVehicleClassInstitutionCode')
+      .mockReturnValue(of([{ value: 'Y51', label: 'Allianz SE' }]));
+
+    component.ngOnInit();
+    component.onAddPreviousInsurer();
+
+    expect(component.multiPrevInsurerForm.length).toBe(1);
+
+    const formVal = component.multiPrevInsurerForm.at(0).value;
+    expect(formVal).toStrictEqual({
+      groupIndex: 0,
+      name: INSTITUTION_CODES[0].label,
+      previousInsurerId: prevInsurerRes.previousInsurerId,
+      startDate: prevInsurerRes.startDateTime,
+      endDate: prevInsurerRes.endDateTime,
+      lastClaimDate: prevInsurerRes.lastPreexistingClaimDateTime,
+    });
+    expect(toastSpy).toHaveBeenCalled();
+    expect(sortMultiInsurerDataSpy).toHaveBeenCalled();
+    expect(component.multiPrevInsurerForm.pristine).toBeTruthy();
+  });
+	
+});
+	
+```
