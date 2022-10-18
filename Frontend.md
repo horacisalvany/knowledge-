@@ -3,6 +3,8 @@
 Frontend: Typescript and SCSS. 
 
 ## Table of contents <!-- omit in toc -->
+- [Angular](#angular)
+  - [Modules](#modules)
 - [Typescript](#typescript)
   - [How to debug a component](#how-to-debug-a-component)
   - [Generic Types](#generic-types)
@@ -11,6 +13,12 @@ Frontend: Typescript and SCSS.
       - [Generic interface](#generic-interface)
       - [Generic classes](#generic-classes)
 - [Scss](#scss)
+
+# Angular
+
+## Modules
+declarations -> Components that belong to that module.
+entryComponents -> Components that are used in that module (like components that can open one modal).
 
 # Typescript
 
