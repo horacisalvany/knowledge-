@@ -17,8 +17,8 @@ Frontend: Typescript and SCSS.
 # Angular
 
 ## Modules
-declarations -> Components that belong to that module.
-entryComponents -> Components that are used in that module (like components that can open one modal).
+- declarations -> Components that belong to that module.
+- entryComponents -> Components that are used in that module (like components that can open one modal).
 
 # Typescript
 
