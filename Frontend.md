@@ -15,7 +15,35 @@ Frontend: Typescript and SCSS.
 - [Scss](#scss)
 
 # Angular
-
+## Templates - We want to repeat a HTML block N times
+We define the template like this. We can pass dynamic variables as context.
+```
+<ng-template #tableDataInput let-context="context">
+    <div nxRow
+     nxRowAlignItems="center"
+     [formGroup]="context.element.get(context.name)"
+     class="form-wrapper">
+      <div nxCol="1">
+        <span class="dot"
+              [ngClass]="getDotColor(context.element.get(context.name))">
+        </span>
+      </div>
+      <div nxCol="8">
+        <nx-formfield nxLabel="">
+          <input nxInput
+                [maxlength]="context.maxlength"
+                [attr.infInputNumberFormatter] = "context?.infInputNumberFormatter ? infInputNumberFormatter : null"
+                [readonly] = "context?.readonly ? true : false"
+                [formControlName]="context.name"/>
+        </nx-formfield>
+      </div>
+    </div>
+</ng-template>
+```
+Then we use the template like:
+`            <ng-template [ngTemplateOutlet]="tableDataInput"
+            [ngTemplateOutletContext]="{ context: {element: element, name: 'licensePlate', maxlength: 12 } }"
+            ></ng-template>`
 ## Modules
 - declarations -> Components that belong to that module.
 - entryComponents -> Components that are used in that module (like components that can open one modal).
