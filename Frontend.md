@@ -57,6 +57,33 @@ Then we use the template like:
   }
 ```
 
+## Enums
+How to transform from string to enum?
+https://stackoverflow.com/questions/17380845/how-do-i-convert-a-string-to-enum-in-typescript
+
+- Method 1:
+```
+enum Color{
+    Red, Green
+}
+
+// To String
+ var green: string = Color[Color.Green];
+
+// To Enum / number
+var color : Color = Color[green];
+```
+
+- Method 2: 
+```
+enum Color {
+  Green = "Green",
+  Red = "Red"
+}
+
+const color = "Green";
+const colorEnum = color as Color;
+```
 ## Generic Types
 https://www.typescriptlang.org/docs/handbook/2/generics.html#working-with-generic-type-variables
 Playing arround -> https://playcode.io/931122/
