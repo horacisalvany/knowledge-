@@ -12,6 +12,7 @@ Frontend: Typescript and SCSS.
       - [Generic type parameter](#generic-type-parameter)
       - [Generic interface](#generic-interface)
       - [Generic classes](#generic-classes)
+- [RXJS](#rxjs)
 - [Scss](#scss)
 
 # Angular
@@ -147,6 +148,69 @@ colores.map((color) => {
     return color = color + '1'
 }) // Returns: ['verde1', 'verde1']
 ```
+# RXJS
+RxJS is a library for reactive programming using Observables
+
+Avoid subscribe inside a subscribe. Why it is not a good way to call subscribe inside subscribe?
+
+Because this is not how functional programming is supposed to work. You are not thinking functionally you are thinking procedurally. This is not necessarily a problem per se, but the whole point of using RXJS (and other reactive programming extensions) is to write functional code.
+I'm not going into all the details on what functional programming is but essentially the point of functional programming is to treat data as streams. Streams that are manipulated by functions and consumed by subscribers. As soon as you add a subscribe inside another subscribe your manipulating data inside a consumer (not inside a stream). So, your functional stream is now broken. This prevents other consumers from utilizing that stream further down in your code. So, you've turned your functional stream into a procedure.
+
+![image](https://user-images.githubusercontent.com/12272206/226896344-2edb46c2-c892-4b79-94f5-12f10b10981e.png)
+Source: 
+*https://stackoverflow.com/questions/52317494/is-it-good-to-call-subscribe-inside-subscribe
+
+
+So basics things that rxjs operator should have:
+- Only have 1 subscribe
+- Replace others subscribes for a RXJS operator. (“concatMap” for sequential VS “forkJoin/combineLatest” in parallel) 
+- Add always untilDestroyed on the pipe. 
+
+
+## Basic operators:
+- filter: typical usage =>  
+	`filter((result) => !isNil(result))`
+- concatMap: when we want to do an operation sequentially. It must return an observable.
+```
+	    this.aggregationDialogService
+      .openAggregationDialog()
+      .pipe(
+        untilDestroyed(this),
+        filter((value) => !!value),
+        concatMap((result: AggregationSetting) => {
+          this.loaderService.show();
+          const payload: AggregatedClaimBean[] = this.createPayloadAggregatedClaimBean(result);
+          return this.claimHistoryService.patchClaimSummary(this.masterContractId, payload);
+        }),
+        concatMap(() => this.refreshTable()),
+        finalize(() => this.loaderService.hide())
+      )
+      .subscribe(() => {
+        const addSuccessText = this.translateService.instant('global.toast.addSuccess');
+        this.toast.successSave('', addSuccessText);
+      });
+```
+- tap: when we want to do some side effects. It returns a `void`. 
+```
+tap(([vehicleProductPackages, pricingDetails, vehicleGroups]) => {
+this.vehicleProductPackages = vehicleProductPackages;
+this.pricingDetailReports = pricingDetails;
+this.vehicleGroups = vehicleGroups;
+
+this.initTableColumns();
+this.prepareAocData(shortRiskClassName);
+this.prepareTableData();
+this.updatePage();
+})
+```
+- ForJoin: forkJoin emits only when all inner observables have completed. If you need an equivalent of forkJoin that just listens to a single emission from each source, use combineLatest + take(1)
+- CombineLatest: Whenever any input Observable emits a value, it computes a formula using the latest values from all the inputs, then emits the output of that formula.
+	
+*Note: !!! Sometimes forkJoin is NOT working as expected and the workaround solution is using the combineLatest. Check WHY !!!
+	
+	
+	
+ 
 
 # Scss
 Alinear el contingut d'un element i els fills. Dos maneres:
