@@ -4,18 +4,29 @@ Frontend: Typescript and SCSS.
 
 ## Table of contents <!-- omit in toc -->
 - [Angular](#angular)
+  - [Standalone components](#standalone-components)
+  - [Templates - We want to repeat a HTML block N times](#templates---we-want-to-repeat-a-html-block-n-times)
   - [Modules](#modules)
 - [Typescript](#typescript)
   - [How to debug a component](#how-to-debug-a-component)
+  - [Enums](#enums)
   - [Generic Types](#generic-types)
       - [Funcio generica:](#funcio-generica)
       - [Generic type parameter](#generic-type-parameter)
       - [Generic interface](#generic-interface)
       - [Generic classes](#generic-classes)
 - [RXJS](#rxjs)
+  - [Basic operators:](#basic-operators)
 - [Scss](#scss)
+- [Testing](#testing)
+  - [Jest](#jest)
+    - [Mock a service for a test component](#mock-a-service-for-a-test-component)
+
 
 # Angular
+## Standalone components 
+https://www.youtube.com/watch?v=DioXD75_t-Q
+Components que no necesiten de modul per ferse servir, ells mateixos son moduls.
 ## Templates - We want to repeat a HTML block N times
 We define the template like this. We can pass dynamic variables as context.
 ```
