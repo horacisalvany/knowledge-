@@ -3,6 +3,8 @@
 Frontend: Typescript and SCSS. 
 
 ## Table of contents <!-- omit in toc -->
+- [Javascript](#javascript)
+  - [Value VS Reference](#value-vs-reference)
 - [Angular](#angular)
   - [Standalone components](#standalone-components)
   - [Templates - We want to repeat a HTML block N times](#templates---we-want-to-repeat-a-html-block-n-times)
@@ -23,6 +25,29 @@ Frontend: Typescript and SCSS.
     - [Mock a service for a test component](#mock-a-service-for-a-test-component)
 
 
+# Javascript
+## Value VS Reference
+If it's a primitive object => Value
+```
+let a = 1;
+let b = a;
+
+b = b + 2;
+
+console.log(a); // 1
+console.log(b); // 3
+```
+else (Objects, arrays, functions => Reference
+```
+let x = [1];
+let y = x;
+
+y.push(2);
+
+console.log(x); // [1, 2]
+console.log(y); // [1, 2]
+```
+https://dmitripavlutin.com/value-vs-reference-javascript/#:~:text=In%20JavaScript%2C%20you%20can%20pass,by%20reference%20when%20assigning%20objects.
 # Angular
 ## Standalone components 
 https://www.youtube.com/watch?v=DioXD75_t-Q
