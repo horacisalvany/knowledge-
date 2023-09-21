@@ -20,7 +20,7 @@ Frontend: Typescript and SCSS.
 - [RXJS](#rxjs)
   - [Basic operators:](#basic-operators)
 - [NX](#nx)
-  - [How to create a component:](#how-create-component)
+  - [How to create a component:](#how-to-create-a-component)
 - [Scss](#scss)
 - [Testing](#testing)
   - [Jest](#jest)
