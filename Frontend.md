@@ -26,8 +26,7 @@ Frontend: Typescript and SCSS.
   - [Jest](#jest)
     - [Mock a service for a test component](#mock-a-service-for-a-test-component)
 
-# NX
- ## How to create a component:
+
 # Javascript
 ## Value VS Reference
 If it's a primitive object => Value
