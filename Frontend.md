@@ -19,12 +19,15 @@ Frontend: Typescript and SCSS.
       - [Generic classes](#generic-classes)
 - [RXJS](#rxjs)
   - [Basic operators:](#basic-operators)
+- [NX](#nx)
+  - [How to create a component:](#how-create-component)
 - [Scss](#scss)
 - [Testing](#testing)
   - [Jest](#jest)
     - [Mock a service for a test component](#mock-a-service-for-a-test-component)
 
-
+# NX
+ ## How to create a component:
 # Javascript
 ## Value VS Reference
 If it's a primitive object => Value
@@ -260,6 +263,11 @@ Alinear el contingut d'un element i els fills. Dos maneres:
 	margin-left: 0;
 	margin-right: auto;
 	```
+ # NX
+ ## How to create a component:
+``` nx generate @nx/angular:component --name=feature/test --project=<lib name. ie client-main> ```
+
+ 
  # Testing
 ## Jest
 ### Mock a service for a test component
