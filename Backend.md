@@ -218,14 +218,17 @@ ExecutorService -> An Executor that provides methods to manage termination and m
 # Maven
 ## How to debug remotely
 Open a CMD and run:
-`set MAVEN_DEBUG_OPT=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8001`
-`mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8001`
-with this we have listening on the port 8001
+```
+set MAVEN_DEBUG_OPT=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8001
 
-with IntelliJ we go: Run -> Edit Configurations... -> Remote JVM debug
+mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8001
+```
+with this we have listening on the port 8001.
+
+On IntelliJ we go: Run -> Edit Configurations... -> Remote JVM debug
 - Port: 8001
 - Use Module Classpath: our-micro-service
-And we run this remote debug.
+And we run this remote debug. If it doesn't work, sometimes it works to disable/enable the breakpoints and run again the request.
 
 # Kotlin
 
