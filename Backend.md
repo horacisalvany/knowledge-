@@ -5,24 +5,28 @@ Backend for Java and Kotlin.
 ## Table of contents <!-- omit in toc -->
 
 - [Java 8](#java-8)
-  - [Collection](#collection)
-  - [Stream](#stream)
-  - [Patterns](#patterns)
-  - [Spring Boot (Spring)](#spring-boot-spring)
-    - [Beans scope](#beans-scope)
-  - [Concurrency: Threads (CompletableFuture API)](#concurrency-threads-completablefuture-api)
+	- [Collection](#collection)
+	- [Stream](#stream)
+	- [Patterns](#patterns)
+	- [Spring Boot (Spring)](#spring-boot-spring)
+		- [Beans scope](#beans-scope)
+	- [Concurrency: Threads (CompletableFuture API)](#concurrency-threads-completablefuture-api)
+- [Maven](#maven)
+	- [How to debug remotely](#how-to-debug-remotely)
 - [Kotlin](#kotlin)
-  - [Nullable: es pot forçar a que una variable sigui not nullable](#nullable-es-pot-forçar-a-que-una-variable-sigui-not-nullable)
-  - [Safe Calls](#safe-calls)
-  - [Elvis Operator](#elvis-operator)
-  - [The !! Operator](#the--operator)
-  - [\* VS ANY](#-vs-any)
-  - [Llibreries utils:](#llibreries-utils)
-  - [Testing](#testing)
-    - [Configuracio:](#configuracio)
-  - [Que testejar?](#que-testejar)
-  - [Links interessants:](#links-interessants)
-  - [Configuracio](#configuracio-1)
+	- [Nullable: es pot forçar a que una variable sigui not nullable](#nullable-es-pot-forçar-a-que-una-variable-sigui-not-nullable)
+	- [Safe Calls](#safe-calls)
+	- [Elvis Operator](#elvis-operator)
+	- [The !! Operator](#the--operator)
+	- [\* VS ANY](#-vs-any)
+	- [Llibreries utils:](#llibreries-utils)
+	- [Testing](#testing)
+		- [Configuracio:](#configuracio)
+	- [Que testejar?](#que-testejar)
+	- [Links interessants:](#links-interessants)
+	- [Configuracio](#configuracio-1)
+
+
 
 # Java 8
 
@@ -210,6 +214,18 @@ Callable -> Return. https://www.callicoder.com/java-callable-and-future-tutorial
 ExecutorService -> An Executor that provides methods to manage termination and methods that can produce a Future for tracking progress of one or more asynchronous tasks.
 
 ---
+
+# Maven
+## How to debug remotely
+Open a CMD and run:
+`set MAVEN_DEBUG_OPT=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8001`
+`mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8001`
+with this we have listening on the port 8001
+
+with IntelliJ we go: Run -> Edit Configurations... -> Remote JVM debug
+- Port: 8001
+- Use Module Classpath: our-micro-service
+And we run this remote debug.
 
 # Kotlin
 
