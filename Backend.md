@@ -7,6 +7,7 @@ Backend for Java and Kotlin.
 - [Java 8](#java-8)
 	- [Collection](#collection)
 	- [Stream](#stream)
+	- [Equals & Hascode](#stream) 	
 	- [Patterns](#patterns)
 	- [Spring Boot (Spring)](#spring-boot-spring)
 		- [Beans scope](#beans-scope)
@@ -121,6 +122,9 @@ class GFG {
 ```
 
 https://www.geeksforgeeks.org/difference-between-streams-and-collections-in-java/
+
+## Equals & Haschode
+It is strongly recommended to implement it because what is usaged for comparing two object of the same Class. This has a direct connection, for instance, when we want to use Set Collectors, because it relies on that two compare two elements since Set interface doesn't allow to have duplicated elements.
 
 ## Patterns
 
