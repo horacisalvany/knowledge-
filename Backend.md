@@ -7,7 +7,7 @@ Backend for Java and Kotlin.
 - [Java 8](#java-8)
 	- [Collection](#collection)
 	- [Stream](#stream)
-	- [Equals & Hascode](#equals-and-hashcode) 	
+	- [Equals & Haschode](#equals-and-hashcode) 	
 	- [Patterns](#patterns)
 	- [Spring Boot (Spring)](#spring-boot-spring)
 		- [Beans scope](#beans-scope)
