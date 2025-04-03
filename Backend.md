@@ -168,7 +168,12 @@ Creats per quan volem trebellar amb Streams. Casos d'ús típics:
             ).collect(Collectors.toList());
     }
 ```
+3. Condicionals: usar el **ifPresent**, es pot combinar amb el **filter** de tal manera que podem filtrar en cas de que tingui valor.
 
+```
+                                KafkaOETopicNameExtractor.extract(message.topic()).filter(OEDetails.UK.getOe()::equals)
+                                        .ifPresent(oe -> claddingMobiInboxProcessor.createInboxEntity(locationId));
+```
 
 ## Equals & Haschode
 It is strongly recommended to implement it because what is usaged for comparing two object of the same Class. This has a direct connection, for instance, when we want to use Set Collectors, because it relies on that two compare two elements since Set interface doesn't allow to have duplicated elements.
