@@ -5,27 +5,28 @@ Backend for Java and Kotlin.
 ## Table of contents <!-- omit in toc -->
 
 - [Java 8](#java-8)
- - [Collection](#collection)
- - [Stream](#stream)
- - [Equals & Haschode](#equals--haschode)
- - [Patterns](#patterns)
- - [Spring Boot Spring](#spring-boot-spring)
-  - [Beans scope](#beans-scope)
- - [Concurrency: Threads CompletableFuture API](#concurrency-threads-completablefuture-api)
+  - [Collection](#collection)
+  - [Stream](#stream)
+  - [Equals & Hashcode](#equals--hashcode)
+  - [Optional](#optional)
+  - [Patterns](#patterns)
+  - [Spring Boot (Spring)](#spring-boot-spring)
+    - [Beans scope](#beans-scope)
+  - [Concurrency: Threads CompletableFuture API](#concurrency-threads-completablefuture-api)
 - [Maven](#maven)
- - [How to debug remotely](#how-to-debug-remotely)
+  - [How to debug remotely](#how-to-debug-remotely)
 - [Kotlin](#kotlin)
- - [Nullable: es pot forçar a que una variable sigui not nullable](#nullable-es-pot-for%C3%A7ar-a-que-una-variable-sigui-not-nullable)
- - [Safe Calls](#safe-calls)
- - [Elvis Operator](#elvis-operator)
- - [The !! Operator](#the--operator)
- - [* VS ANY](#-vs-any)
- - [Llibreries utils:](#llibreries-utils)
- - [Testing](#testing)
-  - [Configuracio:](#configuracio)
- - [Que testejar?](#que-testejar)
- - [Links interessants:](#links-interessants)
- - [Configuracio](#configuracio)
+  - [Nullable: es pot forçar a que una variable sigui not nullable](#nullable-es-pot-forçar-a-que-una-variable-sigui-not-nullable)
+  - [Safe Calls](#safe-calls)
+  - [Elvis Operator](#elvis-operator)
+  - [The !! Operator](#the--operator)
+  - [* VS ANY](#-vs-any)
+  - [Llibreries utils](#llibreries-utils)
+  - [Testing](#testing)
+    - [Configuracio](#configuracio)
+  - [Que testejar?](#que-testejar)
+  - [Links interessants](#links-interessants)
+  - [Configuracio](#configuracio-1)
 
 # Java 8
 
@@ -120,6 +121,54 @@ class GFG {
 ```
 
 https://www.geeksforgeeks.org/difference-between-streams-and-collections-in-java/
+
+## Optional
+Creats per quan volem trebellar amb Streams. Casos d'ús típics:
+1. Volem comprobar si algo es null dins d'un stream, podem fer el condicional if (x == null) dins del stream.
+2. Returnar una **Collection**
+   Exemple on s'usa els dos casos:
+```
+	// Codi dolent
+        return parameters.getReferencesByLocation().get(locationId).stream().flatMap( // NPE: get(locationId) pot returnar null, caldria fer un if abans
+            referenceEntityV1 -> referenceEntityV1.getMessage()
+                .getAssessedByAssessment()
+                .stream()
+                .flatMap(assessment -> assessment.getDoneViaEvaluation()
+                    .stream()
+                    .flatMap(evaluation -> evaluation.getConsistsOfTextualAgreement()
+                        .stream()
+                        .map(textualAgreement -> toTextualAgreement(
+                            textualAgreement, referenceEntityV1, locationId
+                        ))
+                    )
+                )
+            ).collect(Collectors.toList());
+```
+
+```
+	// Codi millorat
+    default List<TextualAgreement> toTextualAgreements(final ClaimsMessageParameters parameters,
+                                                       @Context final String locationId) {
+
+        return Optional.ofNullable(parameters.getReferencesByLocation().get(locationId)) // Definim que pot ser null, sense cambiar la signatura de la funcio!
+            .orElse(Collections.emptyList()) // Perque en cas de ser null, retornem una llista buida.
+            .stream()
+            .flatMap(referenceEntityV1 -> referenceEntityV1.getMessage()
+                .getAssessedByAssessment()
+                .stream()
+                .flatMap(assessment -> assessment.getDoneViaEvaluation()
+                    .stream()
+                    .flatMap(evaluation -> evaluation.getConsistsOfTextualAgreement()
+                        .stream()
+                        .map(textualAgreement -> toTextualAgreement(
+                            textualAgreement, referenceEntityV1, locationId
+                        ))
+                    )
+                )
+            ).collect(Collectors.toList());
+    }
+```
+
 
 ## Equals & Haschode
 It is strongly recommended to implement it because what is usaged for comparing two object of the same Class. This has a direct connection, for instance, when we want to use Set Collectors, because it relies on that two compare two elements since Set interface doesn't allow to have duplicated elements.
