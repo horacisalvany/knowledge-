@@ -27,6 +27,56 @@ Backend for Java and Kotlin.
   - [Que testejar?](#que-testejar)
   - [Links interessants](#links-interessants)
   - [Configuracio](#configuracio-1)
+ 
+# Abstract class vs Interface
+## When to Use an Interface?
+Consider using the interface when our problem makes the statement “A is capable of [doing this]”. For example, “Clonable is capable of cloning an object”, “Drawable is capable of drawing a shape”, etc.
+
+If you inject an interface type in a Spring @Service, and multiple implementations exist, Spring will throw an exception unless you:
+- Use @Qualifier to specify the exact bean, or
+- Inject a List<Interface> to get all implementations and manually process each.
+
+```
+public interface TaskProcessor {
+    void process();
+}
+
+@Component
+public class EmailTaskProcessor implements TaskProcessor {
+    public void process() {
+        System.out.println("Processing email task");
+    }
+}
+
+@Component
+public class SmsTaskProcessor implements TaskProcessor {
+    public void process() {
+        System.out.println("Processing SMS task");
+    }
+}
+
+@Service
+public class TaskService {
+
+    private final List<TaskProcessor> processors;
+
+    public TaskService(List<TaskProcessor> processors) {
+        this.processors = processors;
+    }
+
+    public void processAllTasks() {
+        for (TaskProcessor processor : processors) {
+            processor.process(); // Each implementation is called explicitly
+        }
+    }
+}
+
+```
+
+## When to Use an Abstract Class?
+Consider using abstract classes and inheritance when our problem makes the evidence “A is a B”. For example, “Dog is an Animal”, “Lamborghini is a Car”, etc.
+
+In other words, we may choose an Abstract Class when we see that there are a group of classes which have common code. For instance, all mammary glands that produce milk but not all of them move in the same way (humans vs dogs).
 
 # Java 8
 
