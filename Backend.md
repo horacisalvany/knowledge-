@@ -230,6 +230,62 @@ It is strongly recommended to implement it because what is usaged for comparing 
 
 ## Patterns
 
+### Strategy pattern
+Imagine that we have to apply different logic (like mapping) depend on the country (OE=OperationalEntity). Instead of having in the code chaing of `ifs` like
+```
+if (OE.equals("GB") {
+}
+else if (OE.equals("DE") {
+}
+else if (OE.equals("ES") {
+}
+```
+
+We can apply strategy pattern. Normally we define enums where we store the current implementation of the mapping that we want to apply for each OE.
+```
+public enum OEDetails {
+
+    GLOBAL("GLOBAL", Locale.of("en", "DE"), Currency.EUR, true, LC360CountryConstants.GERMANY),
+    GERMANY("DE", Locale.of("de", "DE"), Currency.EUR, true, LC360CountryConstants.GERMANY),
+    UK("GB", Locale.of("en", "GB"), Currency.GBP, false, LC360CountryConstants.UK);
+    
+    private static final Map<String, OEDetails> mapByOe;
+
+...
+
+public enum LC360CountryConstants {
+    GERMANY("AZ_DE", GermanyLC360Mapper.INSTANCE, new Agent("A0000", "V-A0000", "dummy_agent@allianz.com"), "AZ Germany"),
+    UK("AZ_UK", UnitedKingdomLC360Mapper.INSTANCE, new Agent("12345", "CWB Agency", "CWBAgency@test.com"), "Allianz UK");
+
+```
+
+So here we are defining different mappers depend on the OE (GermanyLC360Mapper or UnitedKingdomLC360Mapper) and both mappers extends for BaseLC360Mapper
+```
+@Mapper(uses = {DateMapper.class, InspectionStatusMapper.class}, imports = Collections.class)
+public interface GermanyLC360Mapper extends BaseLC360Mapper {
+```
+So that means that then we can have clearer code and we don't have the group of ifs in the code, instead we can do things like this:
+```
+    @Transactional
+    public SurveyStatusResponse triggerSurvey(final String operationalEntity,
+                                              final TriggerSurveyRequest request) {
+        final String alternativeLocationId = request.getLocationId();
+        final String originalLocationId = alternativeLocationsService.findOriginalLocationId(alternativeLocationId);
+
+        final OEDetails oeDetails = OEDetails.findByOe(operationalEntity);
+        final BaseLC360Mapper lc360Mapper = oeDetails.getLc360CountryConstants().getLc360Mapper();
+
+        final CreateSurveyDetails createSurveyDetails = buildCreateSurveyDetails(oeDetails, request, originalLocationId);
+        final Survey survey = lc360Service.triggerSurvey(createSurveyDetails);
+
+        final SurveyRationale surveyRationale = surveyRationaleService.createSurveyRationale(request, survey);
+        final String surveyUrl = lc360Service.getSurveyUrl(survey);
+        return lc360Mapper.toSurveyStatusResponse(survey, false, null, surveyRationale, surveyUrl);
+    }
+```
+
+### Prefer Named Functions Over Anonymous Lambdas (not exactly a pattern but a clean code solution, check the link in the bottom)
+
 How to pass from a imperative function to functional one using patterns
 **Key part**: never type **-> {** (anonymous lambdas)
 How to:
