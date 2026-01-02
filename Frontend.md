@@ -87,6 +87,218 @@ Then we use the template like:
 - declarations -> Components that belong to that module.
 - entryComponents -> Components that are used in that module (like components that can open one modal).
 
+## Upgrade to a new version (steps)
+# Angular 16 Migration – Full Guide
+
+This document summarizes the **Angular 16 migration**, the **post-migration cleanup**, and a **clear plan to avoid issues in future upgrades**. It is based on the real migration process of the `ready-to-travel` project.
+
+---
+
+## 1. Migration README (What Was Done and Why)
+
+### 1.1 Initial Situation
+
+- Angular < 16 project
+- Mixed package managers (npm + yarn)
+- Global Angular CLI installed via Homebrew
+- Node version not aligned with Angular requirements
+- AngularFire and Angular Material incompatible with Angular 16
+
+This combination caused repeated failures during `ng update`.
+
+---
+
+### 1.2 Target Environment
+
+| Tool | Version |
+|---|---|
+| Node.js | 18.x |
+| Angular | 16.x |
+| Angular CLI | 16.x |
+| TypeScript | ~4.9.5 |
+| Package manager | Yarn |
+
+---
+
+### 1.3 Migration Strategy Used
+
+1. Stabilize Node.js version
+2. Align Angular CLI (local + global)
+3. Run Angular migrations incrementally
+4. Remove incompatible dependencies
+5. Reinstall Angular Material & builders
+6. Fix tests (standalone components, DI)
+
+---
+
+### 1.4 Key Commands Used During Migration
+
+```bash
+# Node
+brew install node@18
+brew link --overwrite node@18
+
+# Angular CLI
+(should be with yarn!)
+npm uninstall -g @angular/cli
+npm install -g @angular/cli@16
+
+# Clean install
+rm -rf node_modules package-lock.json
+yarn remove @angular/fire firebase\n
+
+yarn install
+
+# Angular migration
+npx ng update @angular/core@16 @angular/cli@16
+
+# Fix TypeScript
+yarn add typescript@~4.9.5 --dev
+
+# Fix builders
+yarn add @angular-devkit/build-angular@16 --dev
+
+# Reinstall Angular Material
+yarn add @angular/material@16 @angular/cdk@16
+```
+
+---
+
+## 2. Post-Migration Cleanup
+
+After the app builds and runs successfully, **cleanup is mandatory**.
+
+### 2.1 Remove Unused / Legacy Files
+
+```bash
+rm -f package-lock.json
+```
+
+Ensure only **one lockfile** exists:
+- ✅ `yarn.lock`
+- ❌ `package-lock.json`
+
+---
+
+### 2.2 Normalize Package Manager
+
+- Use **Yarn only**
+- Do **NOT** mix `npm install` with `yarn add`
+
+Optional (recommended):
+
+```bash
+npm config set ignore-scripts true
+```
+
+---
+
+### 2.3 Verify Angular Versions
+
+```bash
+ng version
+```
+
+Ensure:
+- Angular CLI 16.x
+- Angular Core 16.x
+- TypeScript ~4.9
+
+---
+
+### 2.4 Fix Tests (Angular 16+)
+
+Common fixes:
+
+- Standalone components:
+
+```ts
+TestBed.configureTestingModule({
+  imports: [MyStandaloneComponent]
+});
+```
+
+- Mock required providers explicitly:
+  - `ActivatedRoute`
+  - `MatDialogRef`
+  - `MAT_DIALOG_DATA`
+
+- Defensive guards in components:
+
+```ts
+private isList(obj: any): obj is List {
+  return !!obj && typeof obj === 'object' && 'id' in obj;
+}
+```
+
+---
+
+## 3. Plan to Avoid Problems in Future Angular Upgrades
+
+### 3.1 Always Start with Node Compatibility
+
+Before upgrading Angular:
+
+```bash
+node -v
+```
+
+Check compatibility:
+- Angular 17 → Node 18 / 20
+- Angular 18 → Node 20+
+
+Never upgrade Angular with an unsupported Node version.
+
+---
+
+### 3.2 Use Local Angular CLI (Golden Rule)
+
+Never rely on global CLI for migrations.
+
+```bash
+yarn add @angular/cli@<target-version> --dev
+npx ng update
+```
+
+---
+
+### 3.3 One Package Manager Only
+
+Choose **one**:
+- Yarn (recommended)
+- OR npm
+
+Never mix them.
+
+---
+
+### 3.4 Upgrade in Small Steps
+
+❌ Bad:
+```bash
+ng update @angular/core@latest
+```
+
+✅ Good:
+```bash
+ng update @angular/core@16 @angular/cli@16
+ng update @angular/core@17 @angular/cli@17
+```
+
+---
+
+### 3.5 Check Third-Party Compatibility First
+
+Some libraries can be uncompatible, so remove it manually and install later with the proper version.
+
+### 3.6 Treat Tests as First-Class Citizens
+
+- Expect tests to break
+- Fix DI issues immediately
+- Prefer **mocking** over real services
+
+---
+
 # Typescript
 
 ## How to debug a component
